@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AukcijskaKuca.Interfaces;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AukcijskaKuca.Interfaces;
 
 namespace AukcijskaKuca.Data_Access
 {
@@ -20,6 +15,6 @@ namespace AukcijskaKuca.Data_Access
         }
 
 
-        public static string CnnString(string name) => ConfigurationManager.ConnectionStrings[name].ConnectionString; 
+        public static string CnnString(string name) => ConfigurationManager.ConnectionStrings[name].ConnectionString;
     }
 }

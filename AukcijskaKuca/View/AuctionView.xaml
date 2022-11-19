@@ -5,16 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:AukcijskaKuca.ViewModel"
         mc:Ignorable="d"
-        Title="Kris Auction" Height="730" Width="1300" WindowStartupLocation="CenterScreen">
+        Title="Kris Auction" Height="730" Width="1300" WindowStartupLocation="CenterScreen"
+        Background="LightGray">
 
     <Window.DataContext>
         <vm:AuctionViewModel/>
     </Window.DataContext>
+    
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>            
-            <ColumnDefinition Width="*"/>            
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -33,16 +35,16 @@
                             <StackPanel Orientation="Vertical">
                                 <Label Content="{Binding Path=Name}"/>
                             </StackPanel>
-                            
-                            <StackPanel Orientation="Vertical">                               
+
+                            <StackPanel Orientation="Vertical">
                                 <Label Content="{Binding Path=Price}"/>
                             </StackPanel>
-                            
-                            <StackPanel Orientation="Vertical">                               
+
+                            <StackPanel Orientation="Vertical">
                                 <Label Content="{Binding Path=LastOffer}"/>
                             </StackPanel>
                         </StackPanel>
-                        
+
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -53,40 +55,55 @@
                 <StackPanel>
                     <Label Content="Ime Artikla" HorizontalAlignment="Left"
                            VerticalAlignment="Top"/>
-                    <Label Content="Binding za ime artikla" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    <Label Content="{Binding LastProduct.Name}" HorizontalAlignment="Left" VerticalAlignment="Top"
                            FontWeight="Bold"/>
 
                     <Label Content="Posljednja Ponuda Artikla" HorizontalAlignment="Left"
                            VerticalAlignment="Top"/>
-                    <Label Content="Binding za posljednju pomudu" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    <Label Content="{Binding LastProduct.LastOffer}" HorizontalAlignment="Left" VerticalAlignment="Top"
                            FontWeight="Bold"/>
 
                     <Label Content="Posljednji ponudac" HorizontalAlignment="Left"
                            VerticalAlignment="Top"/>
-                    <Label Content="Binding za posljednjeg ponudaca" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    <Label Content="{Binding LastProduct.Price}" HorizontalAlignment="Left" VerticalAlignment="Top"
                            FontWeight="Bold"/>
                 </StackPanel>
             </GroupBox>
-            
+
             <DockPanel Margin="0 15 0 0" Height="60">
-                
-                <!--Add Command to Buttons-->
-                <Button DockPanel.Dock="Left" Content="New Article" Margin="5" Width="100" Height="30" Command="{Binding NewProductView}"/>
-                <Button DockPanel.Dock="Right" Content="Delete Article" Margin="5" Width="100" Height="30" />
+                <Button DockPanel.Dock="Right" Content="Delete Article" Margin="5" Width="100" Height="30" Command="{Binding DeleteProduct}"/>
             </DockPanel>
-            
+
         </StackPanel>
 
-        <StackPanel Grid.Column="2" Grid.Row="0" Margin="15">
-            <Label Content="Time left until the end"/>
-            <TextBox />
+        <StackPanel Grid.Column="2" Grid.Row="0" Margin="0,15,0,15" Orientation="Vertical"
+                    HorizontalAlignment="Center" Width="346" >
+            <GroupBox Header="Add new Product">
+                <StackPanel>
+                    <Label Content="Name of the new prodcut"/>
+                    <TextBox Text="{Binding NewProduct.Name}" TextWrapping="Wrap" 
+                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Height="25" Width="170"
+                                Margin="0 0 0 10"/>
 
-            <Button Content="Bid" Margin="0 50 0 0" Height="30" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Label Content="Price of product"/>
+                    <TextBox Text="{Binding NewProduct.Price}" TextWrapping="Wrap" 
+                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Height="25" Width="170"
+                                Margin="0 0 0 10"/>
+
+                    <Button Command="{Binding SaveCommand}" Content="Create new Product"
+                            HorizontalAlignment="Right" Width="120"/>
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
-        
+
         <DockPanel Margin="15" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Height="100">
             <Button Content="Log in" Width="100" Height="30" DockPanel.Dock="Left"/>
             <Button Content="Signout" Width="100" Height="30" DockPanel.Dock="Right"/>
         </DockPanel>
+        <Label Content="Time left until the end" Grid.Column="1" Margin="15,92,15,218" Grid.Row="1"/>
+        <TextBlock Grid.Column="1" Margin="15,139,15,178" Grid.Row="1" x:Name="timerTextBox" />
+        <Button Content="Bid" Margin="0,207,0,0" Height="30" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
     </Grid>
 </Window>

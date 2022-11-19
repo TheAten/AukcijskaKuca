@@ -28,6 +28,14 @@ namespace AukcijskaKuca.Data_Access
             dbConnection.Close();
         }
 
+        public void DeleteProduct(int id)
+        {
+            using IDbConnection dbConnection = new SqlConnection(DBConfiguration.CnnString(db));
+            dbConnection.Open();
+            dbConnection.Execute("dbo.spDeleteProduct", new { id }, commandType: CommandType.StoredProcedure);
+            dbConnection.Close();
+        }
+
         public List<Product> GetAllProducts()
         {
             try
