@@ -3,15 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:AukcijskaKuca.ViewModel"
         mc:Ignorable="d"
         Title="Kris Auction" Height="730" Width="1300" WindowStartupLocation="CenterScreen"
         Background="LightGray">
 
-    <Window.DataContext>
-        <vm:AuctionViewModel/>
-    </Window.DataContext>
-    
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -53,19 +48,19 @@
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" Margin="15">
             <GroupBox Header="Article name">
                 <StackPanel>
-                    <Label Content="Ime Artikla" HorizontalAlignment="Left"
+                    <Label Content="Product Name" HorizontalAlignment="Left"
                            VerticalAlignment="Top"/>
-                    <Label Content="{Binding LastProduct.Name}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    <Label Content="{Binding NewProduct.Name}" HorizontalAlignment="Left" VerticalAlignment="Top"
                            FontWeight="Bold"/>
 
-                    <Label Content="Posljednja Ponuda Artikla" HorizontalAlignment="Left"
+                    <Label Content="Last offer" HorizontalAlignment="Left"
                            VerticalAlignment="Top"/>
-                    <Label Content="{Binding LastProduct.LastOffer}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    <Label Content="{Binding NewProduct.Price}" HorizontalAlignment="Left" VerticalAlignment="Top"
                            FontWeight="Bold"/>
 
-                    <Label Content="Posljednji ponudac" HorizontalAlignment="Left"
+                    <Label Content="Last Bidder" HorizontalAlignment="Left"
                            VerticalAlignment="Top"/>
-                    <Label Content="{Binding LastProduct.Price}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    <Label Content="{Binding Path=CurrentUser.Username}" HorizontalAlignment="Left" VerticalAlignment="Top"
                            FontWeight="Bold"/>
                 </StackPanel>
             </GroupBox>
@@ -92,18 +87,29 @@
                                 Height="25" Width="170"
                                 Margin="0 0 0 10"/>
 
-                    <Button Command="{Binding SaveCommand}" Content="Create new Product"
+                    <Button Command="{Binding StartCommand}" Content="Create new Product"
                             HorizontalAlignment="Right" Width="120"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
 
         <DockPanel Margin="15" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Height="100">
-            <Button Content="Log in" Width="100" Height="30" DockPanel.Dock="Left"/>
-            <Button Content="Signout" Width="100" Height="30" DockPanel.Dock="Right"/>
+            <Button Content="Log in" Width="100" Height="30" DockPanel.Dock="Left" Command="{Binding LoginCommand}"/>
         </DockPanel>
         <Label Content="Time left until the end" Grid.Column="1" Margin="15,92,15,218" Grid.Row="1"/>
-        <TextBlock Grid.Column="1" Margin="15,139,15,178" Grid.Row="1" x:Name="timerTextBox" />
-        <Button Content="Bid" Margin="0,207,0,0" Height="30" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+
+        <Label Content="Current user logged in: " Grid.Column="1" Margin="10,45,280,265" Grid.Row="1"/>
+        <Label Content="{Binding CurrentUser.Username}" Grid.Column="1" Margin="160,45,130,265" Grid.Row="1"/>
+
+        <TextBlock Grid.Column="1" Margin="15,139,15,192" Grid.Row="1" Text="{Binding RemainingSeconds, StringFormat=N0}" />
+        
+        <TextBox Width="100" VerticalContentAlignment="Center"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     Text="{Binding Duration}"
+                 Grid.Row="1" Grid.Column="1"/>
+
+        <Button Content="Bid" Margin="0,207,0,0" Height="30" Width="100" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Command="{Binding BidCommand}"/>
+        
     </Grid>
 </Window>

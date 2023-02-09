@@ -1,0 +1,40 @@
+﻿<Window x:Class="AukcijskaKuca.View.Countdown"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AukcijskaKuca.View" 
+        mc:Ignorable="d"
+        Title="Countdown" Height="450" Width="800">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="96"
+                   Text="{Binding RemainingSeconds, StringFormat=N0}"
+                   />
+
+        <StackPanel Grid.Row="1"
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+            <TextBox Width="100" VerticalContentAlignment="Center"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}"/>
+            
+            <Button Margin="10 0 0 0" 
+                    Padding="10 5"
+                    Content="Start"
+                    Command="{Binding StartCommand}"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

@@ -2,7 +2,7 @@
 
 namespace AukcijskaKuca.Interfaces
 {
-    public interface IOpenWindow
+    public interface ITimer
     {
         Action StartTimer { get; set; }
     }

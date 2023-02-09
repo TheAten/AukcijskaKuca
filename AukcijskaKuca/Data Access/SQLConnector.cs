@@ -13,6 +13,18 @@ namespace AukcijskaKuca.Data_Access
     {
         private readonly string db = "AuctionDB";
 
+        public int AdminAccess(Users users)
+        {
+            using IDbConnection dbConnection = new SqlConnection(DBConfiguration.CnnString(db));
+
+            var p = new DynamicParameters();
+            p.Add("@Username", users.Username);
+            dbConnection.Open();
+            int i = (int)dbConnection.ExecuteScalar("dbo.spAdminCheck", p, commandType: CommandType.StoredProcedure);
+            dbConnection.Close();
+            return i;
+        }
+
         public void CreateProduct(Product model)
         {
             using IDbConnection dbConnection = new SqlConnection(DBConfiguration.CnnString(db));
@@ -26,6 +38,19 @@ namespace AukcijskaKuca.Data_Access
             dbConnection.Execute("dbo.spCreateProduct", p, commandType: CommandType.StoredProcedure);
             model.Id = p.Get<int>("@Id");
             dbConnection.Close();
+        } //
+
+        public void CreateUser(Users users)
+        {
+            using IDbConnection dbConnetion = new SqlConnection(DBConfiguration.CnnString(db));
+            var p = new DynamicParameters();
+            p.Add("@Username", users.Username);
+            p.Add("@Password", users.Password);
+            p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+            dbConnetion.Open();
+            dbConnetion.Execute("dbo.spCreateUser", p, commandType: CommandType.StoredProcedure);
+            users.Id = p.Get<int>("@Id");
+            dbConnetion.Close();
         }
 
         public void DeleteProduct(int id)
@@ -54,6 +79,45 @@ namespace AukcijskaKuca.Data_Access
                 MessageBox.Show("Something went wrong with DB");
                 return null;
             }
+        }
+
+        public int LoginCheck(Users users)
+        {
+            int result = 1;
+
+            using IDbConnection dbConnection = new SqlConnection(DBConfiguration.CnnString(db));
+            var p = new DynamicParameters();
+            p.Add("@Username", users.Username);
+            p.Add("@Password", users.Password);
+
+            dbConnection.Open();
+            result = (int)dbConnection.ExecuteScalar("dbo.spLoginCheck", p, commandType: CommandType.StoredProcedure);
+            dbConnection.Close();
+            return result;
+        }
+
+        public int RegisterCheck(Users users)
+        {
+            using IDbConnection dbConnection = new SqlConnection(DBConfiguration.CnnString(db));
+            var p = new DynamicParameters();
+            p.Add("@Username", users.Username);
+
+            dbConnection.Open();
+            int i = (int)dbConnection.ExecuteScalar("dbo.spRegisterCheck", p, commandType: CommandType.StoredProcedure);
+            dbConnection.Close();
+            return i;
+        }
+
+        public void UpdateProduct(Product model, int id)
+        {
+            using IDbConnection dbConnection = new SqlConnection(DBConfiguration.CnnString(db));
+            var p = new DynamicParameters();
+            p.Add("@Price", model.Price);
+            p.Add("@id", model.Id);
+
+            dbConnection.Open();
+            dbConnection.Execute("dbo.spUpdateProduct", p, commandType: CommandType.StoredProcedure);
+            dbConnection.Close();
         }
     }
 }

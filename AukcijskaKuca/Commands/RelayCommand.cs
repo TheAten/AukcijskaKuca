@@ -24,7 +24,8 @@ namespace AukcijskaKuca.Commands
             return _canExecute == null || _canExecute(parametar);
         }
 
-        public void Execute(object parametar) {
+        public void Execute(object parametar)
+        {
             _execute(parametar);
         }
 

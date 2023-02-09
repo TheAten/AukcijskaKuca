@@ -1,0 +1,32 @@
+﻿<Window x:Class="AukcijskaKuca.View.CreateNewUserView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AukcijskaKuca.View"
+        xmlns:helpers="clr-namespace:AukcijskaKuca.Helpers"
+        mc:Ignorable="d"
+        Title="CreateNewUserView" Height="300" Width="300" WindowStartupLocation="CenterScreen">
+
+    <StackPanel Orientation="Vertical"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+        <Label Content="Username"/>
+        <TextBox Text="{Binding Users.Username}"
+                 Height="25" Width="180"
+                 HorizontalAlignment="Left"/>
+
+        <Label Content="Password"/>
+        <helpers:BindablePasswordBox Password="{Binding Users.Password, Mode=TwoWay}"
+                     Height="25" Width="180"
+                     HorizontalAlignment="Left"/>
+
+        <StackPanel Orientation="Horizontal" Width="190">
+           
+            <Button Content="Create Account" VerticalAlignment="Top"
+                Margin="20 10 0 0"
+                Width="92" Command="{Binding CreateUser}"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

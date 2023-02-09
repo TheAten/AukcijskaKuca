@@ -15,7 +15,10 @@
         public string Username
         {
             get { return username; }
-            set { username = value; }
+            set
+            {
+                username = value;
+            }
         }
 
         private string password;
@@ -25,5 +28,14 @@
             get { return password; }
             set { password = value; }
         }
+
+        //private int userType;
+
+        //public int UserType
+        //{
+        //    get { return userType; }
+        //    set { userType = value; }
+        //}
+
     }
 }
